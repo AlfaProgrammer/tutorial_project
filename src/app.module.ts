@@ -1,10 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+
+import { PrismaModule } from './prisma/prisma.module';
+
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true //ora possiamo utilizzare il suo servizione nell'intera app
+      //stessa cosa di aggiungere il decoratore. Solo che qui non si può con esso.
+    }), 
+    AuthModule, 
+    UserModule, 
+    PrismaModule
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
